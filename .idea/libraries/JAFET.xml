@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JAFET">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/JAFET.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
