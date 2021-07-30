@@ -137,25 +137,7 @@ public class login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-  public void check_username(){
-      String User_Name=username.getText();
-      try{
-          Statement s = database.mycon().createStatement();
-          ResultSet rs = s.executeQuery("SELECT * FROM user username ='"+User_Name+"'");
-          while(rs.next()){
-              String username;
-              username=rs.getString("username");
-              if(User_Name==username){
-                    JOptionPane.showMessageDialog(this, "username already exixst use another !");
-              }else{
-                    
-              }
-          }
-      }catch(Exception e){
-          
-      }
-          
-  }
+ 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed

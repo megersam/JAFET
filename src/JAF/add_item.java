@@ -6,6 +6,7 @@
 package JAF;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,6 +78,8 @@ public class add_item extends javax.swing.JPanel {
       total_amount_input.setText(null);
       imagelabel.setIcon(null);
       search_input.setText(null);
+      proft_input.setText(null);
+      price_sale.setText(null);
       // making dissable and enable for automation buttons.
                    update_btn.setVisible(false);
                   delete_btn.setVisible(false);
@@ -88,6 +91,8 @@ public class add_item extends javax.swing.JPanel {
        Sort = sort_selector.getSelectedItem().toString();
        String Buying_Price = buying_price_input.getText();
        String Total_Amount = total_amount_input.getText();
+       String Profit = proft_input.getText();
+       String Price_sale = price_sale.getText();
        Icon Image = imagelabel.getIcon();
         
        if(Item_Name.equals("")){
@@ -96,10 +101,15 @@ public class add_item extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(this, "Enter buying price");
        }else if(Total_Amount.equals("")){
            JOptionPane.showMessageDialog(this, "Enter Total Amount");
-       }else{
+       }else if(Profit.equals("")){
+             JOptionPane.showMessageDialog(this, "Enter profit in percent");
+       }else if(Price_sale.equals("")){
+            JOptionPane.showMessageDialog(this, "price for sale is not generated");
+       }
+       else{
            try{
                  Statement s=database.mycon().createStatement();
-                   s.executeUpdate("INSERT INTO items (item_name,category,sort,buying_price,total_amount,image) VALUES('"+Item_Name+"','"+Category+"','"+Sort+"','"+Buying_Price+"','"+Total_Amount+"','"+Image+"')");
+                   s.executeUpdate("INSERT INTO items (item_name,category,sort,buying_price,total_amount,image,profit_percent,price_sale) VALUES('"+Item_Name+"','"+Category+"','"+Sort+"','"+Buying_Price+"','"+Total_Amount+"','"+Image+"','"+Profit+"', '"+Price_sale+"')");
                    JOptionPane.showMessageDialog(this, "Item Addes !");
                    cancel();
                    Dashboard d = new Dashboard();
@@ -126,7 +136,9 @@ public class add_item extends javax.swing.JPanel {
                  byte[] img = rs.getBytes("image");
                  ImageIcon imageIcon = new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(imagelabel.getWidth(), imagelabel.getHeight(), Image.SCALE_SMOOTH));
                      imagelabel.setIcon(imageIcon);
-                    
+                     
+                    proft_input.setText(rs.getString("profit_percent"));
+                    price_sale.setText(rs.getString("price_sale"));
                  
                   update_btn.setVisible(true);
                   delete_btn.setVisible(true);
@@ -189,10 +201,12 @@ public class add_item extends javax.swing.JPanel {
        Sort = sort_selector.getSelectedItem().toString();
        String Buying_Price = buying_price_input.getText();
        String Total_Amount = total_amount_input.getText();
+       String Persent = proft_input.getText();
+       String price = price_sale.getText();
        //Icon Image = imagelabel.getIcon();
          try{
              Statement s = database.mycon().createStatement();
-             s.executeUpdate("UPDATE items SET item_name ='"+Item_Name+"', category ='"+Category+"', sort ='"+Sort+"', buying_price ='"+Buying_Price+"', total_amount= '"+Total_Amount+"'  WHERE id = '"+Search+"'");
+             s.executeUpdate("UPDATE items SET item_name ='"+Item_Name+"', category ='"+Category+"', sort ='"+Sort+"', buying_price ='"+Buying_Price+"', total_amount= '"+Total_Amount+"', profit_percent= '"+Persent+"', price_sale= '"+price+"'  WHERE id = '"+Search+"'");
              JOptionPane.showMessageDialog(this, "Item data Updated" +Item_Name);
             cancel();
         
@@ -244,6 +258,10 @@ public class add_item extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         search_input = new javax.swing.JTextField();
         imagelabel = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        proft_input = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        price_sale = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(25, 150, 130));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -419,6 +437,43 @@ public class add_item extends javax.swing.JPanel {
         jPanel1.add(search_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 240, 40));
         jPanel1.add(imagelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 250, 210));
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("profit");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 80, 30));
+
+        proft_input.setBackground(new java.awt.Color(25, 150, 130));
+        proft_input.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        proft_input.setForeground(new java.awt.Color(255, 255, 255));
+        proft_input.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        proft_input.setCaretColor(new java.awt.Color(255, 153, 204));
+        proft_input.setOpaque(false);
+        proft_input.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                proft_inputKeyPressed(evt);
+            }
+        });
+        jPanel1.add(proft_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 240, 90, 40));
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Price of sale");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 120, 30));
+
+        price_sale.setEditable(false);
+        price_sale.setBackground(new java.awt.Color(25, 150, 130));
+        price_sale.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        price_sale.setForeground(new java.awt.Color(255, 255, 255));
+        price_sale.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        price_sale.setCaretColor(new java.awt.Color(255, 153, 204));
+        price_sale.setOpaque(false);
+        price_sale.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                price_saleKeyPressed(evt);
+            }
+        });
+        jPanel1.add(price_sale, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 340, 160, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -476,6 +531,22 @@ public class add_item extends javax.swing.JPanel {
     private void immage_attacherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_immage_attacherMouseClicked
      load_image();
     }//GEN-LAST:event_immage_attacherMouseClicked
+
+    private void price_saleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_price_saleKeyPressed
+        
+    }//GEN-LAST:event_price_saleKeyPressed
+
+    private void proft_inputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_proft_inputKeyPressed
+     if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                           double persent =Double.valueOf(proft_input.getText());
+                           double buyingp = Double.valueOf(buying_price_input.getText());
+                           double profit;
+                           double tot;
+                           profit = (persent/100)* buyingp;
+                            tot = buyingp + profit;
+                            price_sale.setText(String.valueOf(tot));
+    }
+    }//GEN-LAST:event_proft_inputKeyPressed
   
       
           
@@ -493,7 +564,9 @@ public class add_item extends javax.swing.JPanel {
     private javax.swing.JLabel immage_attacher;
     private javax.swing.JTextField item_name_input;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -501,6 +574,8 @@ public class add_item extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField price_sale;
+    private javax.swing.JTextField proft_input;
     private javax.swing.JTextField search_input;
     private javax.swing.JComboBox<String> sort_selector;
     private javax.swing.JTextField total_amount_input;

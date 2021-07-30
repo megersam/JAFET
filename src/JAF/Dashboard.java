@@ -96,13 +96,10 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1326, Short.MAX_VALUE)
-                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1326, Short.MAX_VALUE)
+                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,6 +149,11 @@ public class Dashboard extends javax.swing.JFrame {
         jToggleButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jToggleButton2.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton2.setText("View Items");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setBackground(new java.awt.Color(51, 51, 51));
         buttonGroup1.add(jToggleButton3);
@@ -215,6 +217,11 @@ public class Dashboard extends javax.swing.JFrame {
         jToggleButton10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jToggleButton10.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton10.setText("selles");
+        jToggleButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -334,6 +341,18 @@ public class Dashboard extends javax.swing.JFrame {
       sort s = new sort();
       jpload.jPanelLoader(main_panel, s);
     }//GEN-LAST:event_product_sort_btnActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+       items_table it = new items_table();
+        jpload.jPanelLoader(main_panel, it);
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton10ActionPerformed
+        String User_Name= username.getText(); 
+     new POS(User_Name).setVisible(true);
+                     setVisible(false);
+
+    }//GEN-LAST:event_jToggleButton10ActionPerformed
  public void setcolor(JPanel panel)
     {
        panel.setBackground(new java.awt.Color(115, 143, 239)); 
